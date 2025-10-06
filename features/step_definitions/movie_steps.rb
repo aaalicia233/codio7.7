@@ -28,10 +28,16 @@ When /I check the following ratings: (.*)/ do |rating_list|
 end
 
 # Part 2, Step 3
-Then(/^I should (not )?see the following movies: (.*)$/) do |_no, _movie_list|
-  # Take a look at web_steps.rb Then /^(?:|I )should see "([^"]*)"$/
-  pending "Fill in this step in movie_steps.rb"
-end
+Then(/^I should (not )?see the following movies: (.*)$/) do |should_not, movie_list|
+    movies = movie_list.split(', ')
+    movies.each do |movie|
+      if should_not
+        expect(page).not_to have_content(movie)
+      else
+        expect(page).to have_content(movie)
+      end
+    end
+  end
 
 Then /I should see all the movies/ do
   rows = page.all('table#movies tr').size - 1 # -1 是因为要去掉表头那一行
