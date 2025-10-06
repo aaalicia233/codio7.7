@@ -1,5 +1,7 @@
 # Add a declarative step here for populating the DB with movies.
-
+class ApplicationRecord < ActiveRecord::Base
+    self.abstract_class = true
+  end
 Given /the following movies exist:/ do |movies_table|
   movies_table.hashes.each do |movie|
     Movie.create!(movie)
