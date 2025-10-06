@@ -22,14 +22,14 @@ end
 #  "When I check the following ratings: G"
 
 When /I check the following ratings: (.*)/ do |rating_list|
-  rating_list.split(', ').each do |rating|
-    check("ratings[#{rating}]")
+    rating_list.split(/,\s*/).each do |rating|
+      check("ratings[#{rating}]")
+    end
   end
-end
 
 # Part 2, Step 3
 Then(/^I should (not )?see the following movies: (.*)$/) do |should_not, movie_list|
-    movies = movie_list.split(', ')
+    movies = movie_list.split(/,\s*/)
     movies.each do |movie|
       if should_not
         expect(page).not_to have_content(movie)
